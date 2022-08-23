@@ -5,6 +5,7 @@ const UserInput = ({ content }) => {
   const [Counter, setCounter] = useState(0);
   const [CorrectWords, setCorrectWords] = useState(1);
   const [WrongWords, setWrongWords] = useState(1);
+  const [NewWordArray,setWordArray]=useState([])
   // New States
   const [CurrentCharArray, setCurrentCharArray] = useState([]);
   const GlobalCounter = useRef(1);
@@ -12,13 +13,16 @@ const UserInput = ({ content }) => {
   const [rerender, setRerender] = useState();
   const CurrentCounter = useRef(0);
   const [CurrentRange, setCurrentRange] = useState([0, 0]);
-  const [CorrectChars, setCorrectChars] = useState(0);
+  const CorrectChars = useRef(0)
 
 
   useEffect(() => {
     if (!afterRender) return;
+    let counters=0
     for (let i = 0; i < content.length; i++) {
       let currentWord = content[i] + " ";
+      NewWordArray.push([currentWord,counters,counters+currentWord.length-1])
+      counters=counters + currentWord.length-1
       for (let j = 0; j < currentWord.length; j++) {
         CurrentCharArray.push([currentWord[j], false]);
         GlobalCounter.current = GlobalCounter.current + 1;
@@ -31,26 +35,26 @@ const UserInput = ({ content }) => {
     setAfterRender(true);
   }, [rerender]);
 
-  const OnChangeHandler = (event) => {
-  
-    CurrentRange[1] = content[Counter].length;
-    console.log(CurrentRange);
+  const OnChangeHandler = (event) => {     
+    console.log(NewWordArray)
+    CurrentRange[1] = content[Counter].length;    
     let value = event.target.value;
     let lastChar = value.charAt(value.length - 1);
     if (lastChar == CurrentCharArray[CurrentCounter.current][0]) {
-      setCorrectChars(CorrectChars + 1)      
-      CurrentCharArray[CurrentCounter.current][1] = true;
+      CorrectChars.current = CorrectChars.current + 1
+      // CurrentCharArray[CurrentCounter.current][1] = true;
       CurrentCounter.current = CurrentCounter.current + 1;
-      document.getElementById('CorrectChars').innerHTML = CorrectChars
+      document.getElementById('CorrectChars').innerHTML = CorrectChars.current
     } else {
-      setCorrectChars(CorrectChars - 1)      
+      CorrectChars.current = CorrectChars.current - 1
       CurrentCounter.current = CurrentCounter.current + 1;
-      document.getElementById('CorrectChars').innerHTML = CorrectChars
+      document.getElementById('CorrectChars').innerHTML = CorrectChars.current
     }
   };
 
   const KeyDownHandler = (evt) => {
     if (evt.ctrlKey && evt.keyCode === 8) {
+      CorrectChars.current = CorrectChars.current - (CurrentRange[1]-1)
       for (let i = evt.target.value.length - 1; i > 0; i--) {
         CurrentCounter.current = CurrentCounter.current - 1;
         CurrentCharArray[CurrentCounter.current][1] = false;
@@ -83,7 +87,15 @@ const UserInput = ({ content }) => {
         event.target.value = "";
       }
     } else if (event.keyCode === 8) {
+      // console.log(content[Counter])
+      // console.log(CurrentRange[1])
+      // console.log(CurrentCounter.current) 
+      // CurrentRange[0] = CurrentRange[1]-content[Counter].length;
+      // console.log(CurrentRange[0])
+      if (CurrentCounter.current > CurrentRange[0]){
       CurrentCounter.current = CurrentCounter.current - 2;
+      // console.log(CurrentCounter.current)
+      }
     }
   };
   const ResetCounter = () => {
