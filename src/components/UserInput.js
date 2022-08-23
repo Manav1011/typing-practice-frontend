@@ -22,7 +22,7 @@ const UserInput = ({ content }) => {
     for (let i = 0; i < content.length; i++) {
       let currentWord = content[i] + " ";
       NewWordArray.push([currentWord,counters,counters+currentWord.length-1])
-      counters=counters + currentWord.length-1
+      counters=counters + currentWord.length
       for (let j = 0; j < currentWord.length; j++) {
         CurrentCharArray.push([currentWord[j], false]);
         GlobalCounter.current = GlobalCounter.current + 1;
@@ -36,7 +36,6 @@ const UserInput = ({ content }) => {
   }, [rerender]);
 
   const OnChangeHandler = (event) => {     
-    console.log(NewWordArray)
     CurrentRange[1] = content[Counter].length;    
     let value = event.target.value;
     let lastChar = value.charAt(value.length - 1);
@@ -87,14 +86,11 @@ const UserInput = ({ content }) => {
         event.target.value = "";
       }
     } else if (event.keyCode === 8) {
-      // console.log(content[Counter])
-      // console.log(CurrentRange[1])
-      // console.log(CurrentCounter.current) 
-      // CurrentRange[0] = CurrentRange[1]-content[Counter].length;
-      // console.log(CurrentRange[0])
-      if (CurrentCounter.current > CurrentRange[0]){
+      console.log(NewWordArray[Counter])
+      console.log(NewWordArray[Counter][1])
+      if (CurrentCounter.current > NewWordArray[Counter][1]){
       CurrentCounter.current = CurrentCounter.current - 2;
-      // console.log(CurrentCounter.current)
+      console.log(CurrentCounter.current)
       }
     }
   };
