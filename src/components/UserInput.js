@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import {useState,useEffect} from 'react'
 
 
@@ -11,42 +11,69 @@ const UserInput = ({content}) => {
     const [Char2Counter,set2CharCounter]=useState(0)
     const [CorrectChars,setCorrectChars]=useState(1)
     const [WrongChars,setWrongChars]=useState(1)
-    const [seconds, setSeconds] = useState(0);    
-    const [CurrentCharArray,setCurrentCharArray]=useState([])
-    const [GlobalCounter,setGlobalCounter]=useState(0)
+    const [getChars, setChars] = useState(true);
 
+    // New States
+    const [CurrentCharArray,setCurrentCharArray]=useState([])    
+    const GlobalCounter=useRef(1)
+    const [afterRender, setAfterRender] = useState();
+    const [rerender, setRerender] = useState();
+    const CurrentCounter=useRef(0)
+    const [CurrentRange,setCurrentRange]=useState([0,0])
+
+    useEffect(() => {
+        if (!afterRender) return;
+        for ( let i=0; i < content.length; i++ ) {
+            let currentWord=content[i]+' '
+            for (let j=0; j<currentWord.length; j++){
+                CurrentCharArray.push ( [currentWord[j],false] );
+                GlobalCounter.current = GlobalCounter.current   + 1
+            }
+        }        
+        setAfterRender(false);
+     }, [afterRender]);
+
+     useEffect(() => {
+        setAfterRender(true);
+     }, [rerender]);
+         
 
     const OnChangeHandler =(event) => {
+        CurrentRange[1]=content[Counter].length
+        console.log(CurrentRange)
         let value = event.target.value
-        let lastChar=value.charAt(value.length-1)
-        let CurrentWord=content[Counter]+' '
-        if(CharCounter == 0){
-        for ( let i=0; i < CurrentWord.length; i++ ) {
-            CurrentCharArray.push ( [CurrentWord[i],false] );
-        }           
+        let lastChar=value.charAt(value.length-1)    
+        if (lastChar == (CurrentCharArray[CurrentCounter.current][0])){
+            // console.log("true")
+            CurrentCharArray[CurrentCounter.current][1]=true
+            // console.log(CurrentCharArray[CurrentCounter.current]) 
+            CurrentCounter.current=CurrentCounter.current+1
+            // console.log(CurrentRange)            
         }
-        if (lastChar === CurrentWord.charAt(Char2Counter)){
-            console.log("True")
-            CurrentCharArray[GlobalCounter][1]=true
-            setGlobalCounter(GlobalCounter + 1)
-            setCharCounter(CharCounter + 1)
-            set2CharCounter(Char2Counter + 1)
-            console.log(CurrentCharArray)
-        }
-        else{    
-            console.log("False")
-            console.log(GlobalCounter)
-            CurrentCharArray[GlobalCounter][1]=false   
-            console.log(CurrentCharArray)
+        else{            
+            // console.log("false")
+            // console.log(CurrentCharArray[CurrentCounter.current])
+            CurrentCounter.current=CurrentCounter.current+1
         }
     }
     
-    const OnSpaceHandler=(event)=>{
+    const KeyDownHandler =(evt) =>{ 
+        if (evt.ctrlKey && evt.keyCode === 8) {
+            console.log(CurrentCharArray)            
+            for(let i=evt.target.value.length - 1; i>0 ; i--){
+                CurrentCounter.current=CurrentCounter.current - 1
+                console.log(CurrentCounter.current)
+                CurrentCharArray[CurrentCounter.current][1]=false
+            }            
+        }
+    }
+    const OnSpaceHandler=(event)=>{        
         document.getElementById(Counter).classList.add('bg-secondary')
         if(event.keyCode === 32){
-            setCharCounter(0)
-            set2CharCounter(0)
-            console.log(CurrentCharArray)
+            let CurrentWordLength=content[Counter].length
+            let CurrentValueLength=event.target.value.length
+            let CounterValue=(CurrentWordLength-CurrentValueLength)+1
+            CurrentCounter.current=CurrentCounter.current + CounterValue
             var value=event.target.value            
             if (value.length === 1){
                 event.target.value=''
@@ -69,10 +96,7 @@ const UserInput = ({content}) => {
         }
         }        
         else if(event.keyCode === 8){                          
-            setWrongChars(WrongChars - 1)
-            set2CharCounter(Char2Counter - 1)
-            // setGlobalCounter(GlobalCounter - 1) 
-
+            CurrentCounter.current=CurrentCounter.current-2
         }
     }
     const ResetCounter =() => {
@@ -80,7 +104,7 @@ const UserInput = ({content}) => {
     }
   return (
     <div className="container d-flex" style={{margin :"10px"}}>
-        <input className="form-control me-5" type="text" onKeyUp={(e)=> OnSpaceHandler(e)} onChange={(e) => OnChangeHandler(e)} /><button className="btn btn-secondary me-2" id="Timer">1:00</button><button className="btn btn-primary" onClick={ResetCounter}><i className="bi bi-arrow-clockwise"></i></button>
+        <input className="form-control me-5" type="text" onKeyDown={(e)=> KeyDownHandler(e)} onKeyUp={(e)=> OnSpaceHandler(e)} onChange={(e) => OnChangeHandler(e)} /><button className="btn btn-secondary me-2" id="Timer">1:00</button><button className="btn btn-primary" onClick={ResetCounter}><i className="bi bi-arrow-clockwise"></i></button>
 
         <div className="container">
             <h1 id="CorrectChars"></h1>
