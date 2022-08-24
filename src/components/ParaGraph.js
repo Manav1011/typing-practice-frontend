@@ -13,7 +13,7 @@ const ParaGraph = ({content}) => {
             })
         }
     </div>    
-    <UserInput content={stringArray}/>
+    {/* <UserInput content={stringArray}/> */}
     </>
   )
 }
