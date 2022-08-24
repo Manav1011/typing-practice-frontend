@@ -2,6 +2,8 @@ import {React,useState,useEffect,useRef} from 'react'
 import {Helmet} from 'react-helmet';
 import Swal from 'sweetalert2'
 
+import { useNavigate } from "react-router-dom";
+
 const UserInteract = ({content, Theme , ThemeBackground}) => {
 
   const [Counter, setCounter] = useState(0);
@@ -12,6 +14,8 @@ const UserInteract = ({content, Theme , ThemeBackground}) => {
   const [Showwpm,setshowwpm]=useState(false)
   const [WPM ,setWPM]=useState(0)
   const funRef = useRef(null);
+
+  let navigate = useNavigate();
 
   const Timer = () => {    
     var time = 59;
@@ -27,7 +31,7 @@ const UserInteract = ({content, Theme , ThemeBackground}) => {
   if (time < 0) {
     document.getElementById("UserInput").readOnly = true
     setshowwpm(true);    
-    clearInterval(funRef.current);    
+    clearInterval(funRef.current);
   }
 }, 1000);
     }
@@ -95,7 +99,9 @@ const onChangeHandler =(event) =>{
   }
 
   const ResetCounter = () => {
+    clearInterval(funRef.current);
     setCounter(0);
+    navigate('/redirect')
   };
 
 
@@ -105,7 +111,7 @@ const onChangeHandler =(event) =>{
                 <style>{`.UserInput {${ThemeBackground}}`}</style>
             </Helmet>
       <div className='d-flex'>
-        <input id='UserInput' autoFocus className={`form-control me-2 UserInput ${Theme == 'Light' ? 'text-dark' : 'text-light'}`} placeholder="Start Typing..." onChange= {(e) => onChangeHandler(e)} onKeyUp={(e) => OnSpaceHandler(e)}/>                
+        <input id='UserInput' className={`form-control me-2 UserInput ${Theme == 'Light' ? 'text-dark' : 'text-light'}`} placeholder="Start Typing..." onChange= {(e) => onChangeHandler(e)} onKeyUp={(e) => OnSpaceHandler(e)}/>                
         <span id="Timer" className={`me-2 btn border ${Theme=='Light'? 'border-dark text-dark' : 'border-light text-light'}`} disabled >1:00</span>
         <button className="btn btn-primary" onClick={ResetCounter}>
         <i className="bi bi-arrow-clockwise"></i>

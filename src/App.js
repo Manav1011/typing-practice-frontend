@@ -2,6 +2,8 @@ import {useState,useEffect} from 'react'
 import NavBar from "./components/Navigation";
 import {Helmet} from 'react-helmet';
 import MainBody from './components/MainBody';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Redirect from './components/Redirect';
 
 
 function App() {
@@ -64,11 +66,16 @@ function App() {
   
   return (
   <div className="App">
+    <BrowserRouter>
        <Helmet>
                 <style>{`body {${ThemeBackground}}`}</style>
             </Helmet>
     <NavBar Theme={Theme} setTheme={setTheme}/>
-    <MainBody Theme={Theme} ThemeText={ThemeText} ThemeBackground={ThemeBackground}/>
+    <Routes>
+      <Route path='/' exact element={<MainBody Theme={Theme} ThemeText={ThemeText} ThemeBackground={ThemeBackground}/>}/>
+      <Route path='/redirect' exact element={<Redirect/>}/>
+      </Routes>
+    </BrowserRouter>
   </div>
   )
 }
