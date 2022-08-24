@@ -1,5 +1,7 @@
 import React, { useRef } from "react";
 import { useState, useEffect } from "react";
+import Swal from 'sweetalert2'
+
 
 const UserInput = ({ content }) => {
   const [Counter, setCounter] = useState(0);
@@ -11,6 +13,12 @@ const UserInput = ({ content }) => {
   const CorrectChars =useRef(0)
   const [startTimer,setStartTimer]= useState(true)
   const WrongCharCount=useRef(0)
+  const [Showwpm,setshowwpm]=useState(false)
+  const [WPM ,setWPM]=useState(0)
+
+  const funRef = useRef(null);
+
+
 
   useEffect(() => {
     if (!afterRender) return;
@@ -21,10 +29,10 @@ const UserInput = ({ content }) => {
     setAfterRender(true);
   }, [rerender]);
 
-  const Timer = () => {
-    var time = 5;
-  var intervalId= setInterval(function() {
-  setStartTimer(false)
+  const Timer = () => {    
+    var time = 59;
+    setStartTimer(false)
+    funRef.current= setInterval(function() {
   var seconds = time ;
   var minutes = (time - seconds) / 60;
   if (seconds.toString().length == 1) {
@@ -33,11 +41,11 @@ const UserInput = ({ content }) => {
   document.getElementById("Timer").innerHTML =+ seconds;  
   time--;
   if (time < 0) {
-    document.getElementById('WPM').classList.remove('d-none')
-    clearInterval(intervalId);
+    setshowwpm(true);    
+    clearInterval(funRef.current);    
   }
 }, 1000);
-  }
+    }
 
 const onChangeHandler =(event) =>{
   // let CharPosition=(event.target.value.length) - 1
@@ -50,32 +58,12 @@ const onChangeHandler =(event) =>{
   else{
     document.getElementById(Counter).classList.add("bg-danger");    
   }
-  // if (event.target.value[CharPosition] == content[Counter][CharPosition]){  
-  //   WrongCharCount.current = WrongCharCount.current -1
-  // }
-  // else{
-  //   WrongCharCount.current = event.target.value.length
-    
-  // }
-  // if (WrongCharCount.current > 0){
-  //   document.getElementById(Counter).classList.add("bg-danger");
-  // }
-  // else{
-  //   document.getElementById(Counter).classList.remove("bg-danger");
-  // }
-  
-  // console.log(event.target.value[CharPosition])
 }
 
   const OnSpaceHandler = (event) => {
     if (startTimer){
     Timer()
-    }
-    // if (event.target.value[event.target.value.length - 1] === content[Counter][event.target.value.length - 1] ){
-    // }
-    // else{      
-      
-    // }
+    }   
 
     document.getElementById(Counter).classList.add("bg-secondary");
     if (event.keyCode === 32) {
@@ -95,7 +83,7 @@ const onChangeHandler =(event) =>{
       }
       CorrectChars.current = CorrectChars.current + 1
       document.getElementById('CorrectChars').innerHTML = CorrectChars.current
-      document.getElementById('WPM').innerHTML = `Your WPM is: ${CorrectChars.current / 5}`
+      setWPM(CorrectChars.current / 5)          
       if (value.length === 1) {
         event.target.value = "";
       } else {
@@ -116,18 +104,25 @@ const onChangeHandler =(event) =>{
     }
   };
 
+  if(Showwpm){
+    Swal.fire({
+      icon: 'success',
+      title: 'Congratulations...',
+      text: `Your Speed Was ${WPM} Words Per Minute`,  
+    })
+  }
 
   const ResetCounter = () => {
     setCounter(0);
   };
   return (
     <div className="container d-flex" style={{ margin: "10px" }}>
-      <input
+    {Showwpm? null :<input
         className="form-control me-5"
         type="text"
         onChange= {(e) => onChangeHandler(e)}
         onKeyUp={(e) => OnSpaceHandler(e)}
-      />
+      />}
       <button className="btn btn-secondary me-2" id="Timer">
         1:00
       </button>
@@ -137,12 +132,7 @@ const onChangeHandler =(event) =>{
 
       <div className="container">
         <h1 id="CorrectChars"></h1>
-      </div>
-      <div>
-        <h1 id = "WPM" className="d-none">
-
-        </h1>
-      </div>
+      </div>      
     </div>
   );
 };
