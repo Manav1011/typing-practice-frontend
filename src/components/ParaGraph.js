@@ -3,7 +3,7 @@ import UserInput from "./UserInput";
 
 const ParaGraph = ({content}) => {
   
-    var stringArray = content.split(/(\s+)/).filter( e => e.trim().length > 0)    
+    var stringArray = content.split(/(\s+)/).filter( e => e.trim().length > 0)
   return (
     <>
     <div className="form-control" style={{border: '1px solid black',padding: '100px'}}>

@@ -11,3 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 } */
+
+.ParaCard{
+font-family: 'Fira Code', monospace;
+text-align: justify;
+text-justify: inter-word;
+}
+.ParaCard::-webkit-scrollbar {
+  display: none;
+}

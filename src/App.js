@@ -1,25 +1,15 @@
-import ParaGraph from "./components/ParaGraph";
 import {useState,useEffect} from 'react'
 import NavBar from "./components/Navigation";
 import {Helmet} from 'react-helmet';
+import MainBody from './components/MainBody';
 
 
 function App() {
-  const [Theme,setTheme]=useState()
+  const [Theme,setTheme]=useState('Dark')
   const [ThemeBackground,setThemeBackground]=useState()
   const [ThemeText,setThemeText]=useState()
-
+  
   useEffect(() => {
-    if(localStorage.getItem('theme')){
-      console.log("Exist")
-      setTheme(localStorage.getItem('theme'))
-    }
-    else{
-      setTheme('Dark')
-    }
-  },[])
-  useEffect(() => {
-      localStorage.setItem('theme',Theme)
       if(Theme === 'Lawrencium'){
         setThemeText('text-light')
         setThemeBackground(`background: #0f0c29;  /* fallback for old browsers */
@@ -35,8 +25,7 @@ function App() {
         `)
       }
       else if(Theme === 'Dark'){
-        setThemeText('text-light')
-        setThemeText('bg-light')
+        setThemeText('text-light')        
         setThemeBackground(`background: #000000;  /* fallback for old browsers */
         background: -webkit-linear-gradient(to right, #434343, #000000);  /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to right, #434343, #000000); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
@@ -70,22 +59,16 @@ function App() {
         background: linear-gradient(to right, #6f0000, #200122); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         `)
       }
+  localStorage.setItem('theme',Theme)
+  },[Theme])  
   
-  },[Theme])
-
-
-  const [ParaContent, setContent] = useState("");
-  useEffect(() => {
-    let para = `Life is a mixture of ups and downs and one who has life must have seen various colours of life. Sometimes the colours are vivid and bright and sometimes they are just black and white. Life is a challenge and one who has the courage and strength to face it bravely is the one who goes through it and emerges as a great and successful person in life. Every person who has life is given various opportunities to make his life happy and prosperous and the one who understands this surely succeed in life. People who think that life is easy must know how people who don’t have a home to live and food to eat survive on this planet.`;
-    setContent(para);
-  }, []);
   return (
   <div className="App">
        <Helmet>
                 <style>{`body {${ThemeBackground}}`}</style>
             </Helmet>
     <NavBar Theme={Theme} setTheme={setTheme}/>
-    {/* <ParaGraph content={ParaContent}/> */}
+    <MainBody Theme={Theme} ThemeText={ThemeText} ThemeBackground={ThemeBackground}/>
   </div>
   )
 }
