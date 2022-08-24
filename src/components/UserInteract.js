@@ -102,8 +102,7 @@ const onChangeHandler =(event) =>{
     clearInterval(funRef.current);
     setCounter(0);
     navigate('/redirect')
-  };
-
+  };  
 
   return (
     <div className="mt-4 mx-5 UserInteraction">
@@ -111,7 +110,7 @@ const onChangeHandler =(event) =>{
                 <style>{`.UserInput {${ThemeBackground}}`}</style>
             </Helmet>
       <div className='d-flex'>
-        <input id='UserInput' className={`form-control me-2 UserInput ${Theme == 'Light' ? 'text-dark' : 'text-light'}`} placeholder="Start Typing..." onChange= {(e) => onChangeHandler(e)} onKeyUp={(e) => OnSpaceHandler(e)}/>                
+        <input autocomplete="off" id='UserInput' className={`form-control me-2 UserInput ${Theme == 'Light' ? 'text-dark' : 'text-light'}`} placeholder="Start Typing..." onChange= {(e) => onChangeHandler(e)} onKeyUp={(e) => OnSpaceHandler(e)}/>                
         <span id="Timer" className={`me-2 btn border ${Theme=='Light'? 'border-dark text-dark' : 'border-light text-light'}`} disabled >1:00</span>
         <button className="btn btn-primary" onClick={ResetCounter}>
         <i className="bi bi-arrow-clockwise"></i>

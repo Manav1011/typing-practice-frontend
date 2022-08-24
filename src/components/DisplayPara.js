@@ -3,7 +3,7 @@ import {Helmet} from 'react-helmet';
 
 function DisplayPara({content,Theme,ThemeBackground}) {          
   return (
-    <div className="mt-4 mx-5 border p-3">
+    <div className={`mt-4 mx-5  p-3 border ${Theme=='Light'? 'border-dark': 'border-light'}`}>
             <Helmet>
                 <style>{`.ParaCard {${ThemeBackground}}`}</style>
             </Helmet>
