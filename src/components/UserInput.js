@@ -5,29 +5,17 @@ const UserInput = ({ content }) => {
   const [Counter, setCounter] = useState(0);
   const [CorrectWords, setCorrectWords] = useState(1);
   const [WrongWords, setWrongWords] = useState(1);
-  const [NewWordArray,setWordArray]=useState([])
-  // New States
-  const [CurrentCharArray, setCurrentCharArray] = useState([]);
-  const GlobalCounter = useRef(1);
+  const [NewWordArray, setWordArray] = useState([]);
   const [afterRender, setAfterRender] = useState();
   const [rerender, setRerender] = useState();
-  const CurrentCounter = useRef(0);
-  const [CurrentRange, setCurrentRange] = useState([0, 0]);
-  const CorrectChars = useRef(0)
+  const CorrectChars =useRef(0)
+  const [startTimer,setStartTimer]= useState(true)
+  const BackSpaceCounter =useRef(0)
+  const [WrongCharPosition,setWrongCharPosition] = useState([])
 
 
   useEffect(() => {
     if (!afterRender) return;
-    let counters=0
-    for (let i = 0; i < content.length; i++) {
-      let currentWord = content[i] + " ";
-      NewWordArray.push([currentWord,counters,counters+currentWord.length-1])
-      counters=counters + currentWord.length
-      for (let j = 0; j < currentWord.length; j++) {
-        CurrentCharArray.push([currentWord[j], false]);
-        GlobalCounter.current = GlobalCounter.current + 1;
-      }
-    }
     setAfterRender(false);
   }, [afterRender]);
 
@@ -35,43 +23,67 @@ const UserInput = ({ content }) => {
     setAfterRender(true);
   }, [rerender]);
 
-  const OnChangeHandler = (event) => {     
-    CurrentRange[1] = content[Counter].length;    
-    let value = event.target.value;
-    let lastChar = value.charAt(value.length - 1);
-    if (lastChar == CurrentCharArray[CurrentCounter.current][0]) {
-      CorrectChars.current = CorrectChars.current + 1
-      // CurrentCharArray[CurrentCounter.current][1] = true;
-      CurrentCounter.current = CurrentCounter.current + 1;
-      document.getElementById('CorrectChars').innerHTML = CorrectChars.current
-    } else {
-      CorrectChars.current = CorrectChars.current - 1
-      CurrentCounter.current = CurrentCounter.current + 1;
-      document.getElementById('CorrectChars').innerHTML = CorrectChars.current
-    }
-  };
+  const Timer = () => {
+    var time = 5;
+  var intervalId= setInterval(function() {
+  setStartTimer(false)
+  var seconds = time ;
+  var minutes = (time - seconds) / 60;
+  if (seconds.toString().length == 1) {
+    seconds =  seconds;
+  }
+  document.getElementById("Timer").innerHTML =+ seconds;  
+  time--;
+  if (time < 0) {
+    document.getElementById('WPM').classList.remove('d-none')
+    clearInterval(intervalId);
+  }
+}, 1000);
+  }
 
-  const KeyDownHandler = (evt) => {
-    if (evt.ctrlKey && evt.keyCode === 8) {
-      CorrectChars.current = CorrectChars.current - (CurrentRange[1]-1)
-      for (let i = evt.target.value.length - 1; i > 0; i--) {
-        CurrentCounter.current = CurrentCounter.current - 1;
-        CurrentCharArray[CurrentCounter.current][1] = false;
-      }
-    }
-  };
   const OnSpaceHandler = (event) => {
+    if (startTimer){
+    Timer()
+    }
+    if (event.target.value[event.target.value.length - 1] === content[Counter][event.target.value.length - 1] ){      
+    }
+    else{
+      WrongCharPosition.push(event.target.value.length)
+      document.getElementById(Counter).classList.add("bg-danger");
+    }
+
+    if(event.keyCode == 8){
+      console.log(WrongCharPosition[0])      
+      BackSpaceCounter.current = BackSpaceCounter.current + 1      
+      if (BackSpaceCounter.current == WrongCharPosition[0] + 1){
+        document.getElementById(Counter).classList.remove("bg-danger");
+        setWrongCharPosition([])
+      }
+      
+    }
+
     document.getElementById(Counter).classList.add("bg-secondary");
     if (event.keyCode === 32) {
-      let CurrentWordLength = content[Counter].length;
-      let CurrentValueLength = event.target.value.length;
-      let CounterValue = CurrentWordLength - CurrentValueLength + 1;
-      CurrentCounter.current = CurrentCounter.current + CounterValue;
+      document.getElementById(Counter).classList.remove("bg-danger");
       var value = event.target.value;
+      var CurrentWord=content[Counter]
+      for(let i=0; i<value.length ; i++){
+        if(value[i] === CurrentWord[i]){
+          CorrectChars.current = CorrectChars.current + 1
+        }
+        else{
+          if( value[i] != ' '){
+            CorrectChars.current = CorrectChars.current - value.length + 1
+          }
+        }
+      }
+      CorrectChars.current = CorrectChars.current + 1
+      document.getElementById('CorrectChars').innerHTML = CorrectChars.current
+      document.getElementById('WPM').innerHTML = `Your WPM is: ${CorrectChars.current / 5}`
       if (value.length === 1) {
         event.target.value = "";
       } else {
-        setCounter(Counter + 1);
+        setCounter(Counter + 1);        
         if (event.target.value.trim() === content[Counter]) {
           document.getElementById(Counter).classList.remove("bg-secondary");
           document.getElementById(Counter + 1).classList.add("bg-secondary");
@@ -85,15 +97,10 @@ const UserInput = ({ content }) => {
         }
         event.target.value = "";
       }
-    } else if (event.keyCode === 8) {
-      console.log(NewWordArray[Counter])
-      console.log(NewWordArray[Counter][1])
-      if (CurrentCounter.current > NewWordArray[Counter][1]){
-      CurrentCounter.current = CurrentCounter.current - 2;
-      console.log(CurrentCounter.current)
-      }
     }
   };
+
+
   const ResetCounter = () => {
     setCounter(0);
   };
@@ -102,9 +109,7 @@ const UserInput = ({ content }) => {
       <input
         className="form-control me-5"
         type="text"
-        onKeyDown={(e) => KeyDownHandler(e)}
         onKeyUp={(e) => OnSpaceHandler(e)}
-        onChange={(e) => OnChangeHandler(e)}
       />
       <button className="btn btn-secondary me-2" id="Timer">
         1:00
@@ -115,7 +120,11 @@ const UserInput = ({ content }) => {
 
       <div className="container">
         <h1 id="CorrectChars"></h1>
-        <h1 id="WrongChars"></h1>
+      </div>
+      <div>
+        <h1 id = "WPM" className="d-none">
+
+        </h1>
       </div>
     </div>
   );
