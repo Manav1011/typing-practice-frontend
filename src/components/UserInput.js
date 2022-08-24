@@ -10,9 +10,7 @@ const UserInput = ({ content }) => {
   const [rerender, setRerender] = useState();
   const CorrectChars =useRef(0)
   const [startTimer,setStartTimer]= useState(true)
-  const BackSpaceCounter =useRef(0)
-  const [WrongCharPosition,setWrongCharPosition] = useState([])
-
+  const WrongCharCount=useRef(0)
 
   useEffect(() => {
     if (!afterRender) return;
@@ -41,29 +39,47 @@ const UserInput = ({ content }) => {
 }, 1000);
   }
 
+const onChangeHandler =(event) =>{
+  // let CharPosition=(event.target.value.length) - 1
+  let CurrentWord=content[Counter]+' '
+  let CurrentValue=event.target.value
+  let result=CurrentWord.includes(CurrentValue)
+  if (result){    
+    document.getElementById(Counter).classList.remove("bg-danger");
+  }
+  else{
+    document.getElementById(Counter).classList.add("bg-danger");    
+  }
+  // if (event.target.value[CharPosition] == content[Counter][CharPosition]){  
+  //   WrongCharCount.current = WrongCharCount.current -1
+  // }
+  // else{
+  //   WrongCharCount.current = event.target.value.length
+    
+  // }
+  // if (WrongCharCount.current > 0){
+  //   document.getElementById(Counter).classList.add("bg-danger");
+  // }
+  // else{
+  //   document.getElementById(Counter).classList.remove("bg-danger");
+  // }
+  
+  // console.log(event.target.value[CharPosition])
+}
+
   const OnSpaceHandler = (event) => {
     if (startTimer){
     Timer()
     }
-    if (event.target.value[event.target.value.length - 1] === content[Counter][event.target.value.length - 1] ){      
-    }
-    else{
-      WrongCharPosition.push(event.target.value.length)
-      document.getElementById(Counter).classList.add("bg-danger");
-    }
-
-    if(event.keyCode == 8){
-      console.log(WrongCharPosition[0])      
-      BackSpaceCounter.current = BackSpaceCounter.current + 1      
-      if (BackSpaceCounter.current == WrongCharPosition[0] + 1){
-        document.getElementById(Counter).classList.remove("bg-danger");
-        setWrongCharPosition([])
-      }
+    // if (event.target.value[event.target.value.length - 1] === content[Counter][event.target.value.length - 1] ){
+    // }
+    // else{      
       
-    }
+    // }
 
     document.getElementById(Counter).classList.add("bg-secondary");
     if (event.keyCode === 32) {
+      WrongCharCount.current= 0
       document.getElementById(Counter).classList.remove("bg-danger");
       var value = event.target.value;
       var CurrentWord=content[Counter]
@@ -109,6 +125,7 @@ const UserInput = ({ content }) => {
       <input
         className="form-control me-5"
         type="text"
+        onChange= {(e) => onChangeHandler(e)}
         onKeyUp={(e) => OnSpaceHandler(e)}
       />
       <button className="btn btn-secondary me-2" id="Timer">
