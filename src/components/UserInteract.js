@@ -56,7 +56,7 @@ const onChangeHandler =(event) =>{
     Timer()
     }   
     document.getElementById(Counter).classList.add("bg-secondary");
-    if (event.keyCode === 32) {      
+    if (event.keyCode === 32 || event.target.value[event.target.value.length - 1] == ' ') {      
       document.getElementById(Counter).classList.remove("bg-danger");
       var value = event.target.value;
       var CurrentWord=content[Counter]
@@ -117,11 +117,13 @@ const onChangeHandler =(event) =>{
                 <style>{`.WPMMODAL{${ThemeBackground}}`}</style>
             </Helmet>
       <div className='d-flex'>
-        <input autoComplete="off" id='UserInput' className={`form-control me-2 UserInput ${Theme == 'Light' ? 'text-dark' : 'text-light'}`} placeholder="Start Typing..." onChange= {(e) => onChangeHandler(e)} onKeyUp={(e) => OnSpaceHandler(e)}/>                
+        <input autoCorrect="off" autoCapitalize="none" autoComplete="off" id='UserInput' className={`form-control me-2 UserInput ${Theme == 'Light' ? 'text-dark' : 'text-light'}`} placeholder="Start Typing..." onChange= {(e) => onChangeHandler(e)} onKeyUp={(e) => OnSpaceHandler(e)}/>                
         <span id="Timer" className={`me-2 btn border ${Theme=='Light'? 'border-dark text-dark' : 'border-light text-light'}`} disabled >1:00</span>
         <button className={`btn border ${Theme=='Light'? 'border-dark text-dark' : 'border-light text-light'}`} onClick={ResetCounter}>
         <i className="bi bi-arrow-clockwise"></i>
-      </button>     
+      </button>   
+      <div>          
+        </div>  
       </div>
       <div className={`modal fade WPMMODAL container-fluid`}  id="WPMmodal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div className="modal-dialog modal-dialog-centered">
