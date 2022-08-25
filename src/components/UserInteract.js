@@ -62,11 +62,11 @@ const onChangeHandler =(event) =>{
       var CurrentWord=content[Counter]
       for(let i=0; i<value.length ; i++){
         if(value[i] === CurrentWord[i]){
-          CorrectChars.current = CorrectChars.current + 1
+          CorrectChars.current = CorrectChars.current + 1          
         }
         else{
           if( value[i] != ' '){
-            CorrectChars.current = CorrectChars.current - value.length + 1
+            CorrectChars.current = CorrectChars.current - 1
           }
         }
       }
@@ -120,7 +120,7 @@ const onChangeHandler =(event) =>{
         <span id="Timer" className={`me-2 btn border ${Theme=='Light'? 'border-dark text-dark' : 'border-light text-light'}`} disabled >1:00</span>
         <button className="btn btn-primary" onClick={ResetCounter}>
         <i className="bi bi-arrow-clockwise"></i>
-      </button>
+      </button>     
       </div>
       <div className={`modal fade WPMMODAL container-fluid`}  id="WPMmodal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div className="modal-dialog modal-dialog-centered">
