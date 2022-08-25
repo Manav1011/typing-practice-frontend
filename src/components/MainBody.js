@@ -8,10 +8,10 @@ const MainBody = ({Theme, ThemeText, ThemeBackground}) => {
   const [ParaContent, setContent] = useState([]);  
   useEffect(() => {    
     setContent(['Loading ....'])
-    fetch('http://metaphorpsum.com/paragraphs/1/20',{
+    fetch('https://ten-fingers-django.herokuapp.com',{
       'method':'GET',
     }).then((response) => {
-      return response.text()
+      return response.json()
     }).then((data) => {
       setContent(data.split(/(\s+)/).filter( e => e.trim().length > 0));
     })
