@@ -20,7 +20,7 @@ const UserInteract = ({content, Theme , ThemeBackground}) => {
   let navigate = useNavigate();
 
   const Timer = () => {    
-    var time = 5;
+    var time = 59;
     setStartTimer(false)
     funRef.current= setInterval(function() {
   var seconds = time ;
