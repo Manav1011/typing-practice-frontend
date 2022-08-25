@@ -9,6 +9,7 @@ function NavBar({Theme,setTheme}) {
 
    const ChangeTheme =(ChosenTheme)  =>{
     setTheme(ChosenTheme)
+    localStorage.setItem('Theme',ChosenTheme)
    }
   return (
     <Navbar className={`${Theme=='Light'? 'navbar-light' : 'navbar-dark'}`}>

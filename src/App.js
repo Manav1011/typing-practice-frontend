@@ -12,6 +12,11 @@ function App() {
   const [ThemeText,setThemeText]=useState()
   
   useEffect(() => {
+
+      if(localStorage.getItem('Theme')){
+        setTheme(localStorage.getItem('Theme'))
+      }
+
       if(Theme === 'Lawrencium'){
         setThemeText('text-light')
         setThemeBackground(`background: #0f0c29;  /* fallback for old browsers */
