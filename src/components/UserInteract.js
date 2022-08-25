@@ -20,7 +20,7 @@ const UserInteract = ({content, Theme , ThemeBackground}) => {
   let navigate = useNavigate();
 
   const Timer = () => {    
-    var time = 59;
+    var time = 5;
     setStartTimer(false)
     funRef.current= setInterval(function() {
   var seconds = time ;
@@ -105,6 +105,7 @@ const onChangeHandler =(event) =>{
   const closeModal = () => {    
     clearInterval(funRef.current);
     setCounter(0);    
+    document.getElementById('DismisModal').click()    
     navigate('/redirect')
   };  
 
@@ -118,7 +119,7 @@ const onChangeHandler =(event) =>{
       <div className='d-flex'>
         <input autoComplete="off" id='UserInput' className={`form-control me-2 UserInput ${Theme == 'Light' ? 'text-dark' : 'text-light'}`} placeholder="Start Typing..." onChange= {(e) => onChangeHandler(e)} onKeyUp={(e) => OnSpaceHandler(e)}/>                
         <span id="Timer" className={`me-2 btn border ${Theme=='Light'? 'border-dark text-dark' : 'border-light text-light'}`} disabled >1:00</span>
-        <button className="btn btn-primary" onClick={ResetCounter}>
+        <button className={`btn border ${Theme=='Light'? 'border-dark text-dark' : 'border-light text-light'}`} onClick={ResetCounter}>
         <i className="bi bi-arrow-clockwise"></i>
       </button>     
       </div>
@@ -135,7 +136,8 @@ const onChangeHandler =(event) =>{
         <br/>
         Wrong Words: {WrongWords}
       </div>
-      <div className="text-center mb-3">        
+      <div className="text-center mb-3">      
+      <button type="button" className="btn btn-secondary d-none" id="DismisModal" data-bs-dismiss="modal">Close</button>  
         <button onClick={closeModal} data-bs-dismiss="modal" type="button" className={`btn btn-sm bg-gradient continuebtn ${Theme =='Light'? 'text-dark border-dark' : 'text-light border-light'}`} >Continue</button>
       </div>
     </div>
