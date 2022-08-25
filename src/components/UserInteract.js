@@ -1,8 +1,10 @@
 import {React,useState,useEffect,useRef} from 'react'
 import {Helmet} from 'react-helmet';
 import Swal from 'sweetalert2'
+import $ from 'jquery'
+import { Modal } from 'bootstrap'
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 
 const UserInteract = ({content, Theme , ThemeBackground}) => {
 
@@ -91,11 +93,8 @@ const onChangeHandler =(event) =>{
   };
 
   if(Showwpm){
-    Swal.fire({
-      icon: 'success',
-      title: 'Congratulations...',
-      text: `Your Speed Was ${WPM} Words Per Minute`,  
-    })
+    let myModal = new Modal(document.getElementById('WPMmodal'), {});
+  myModal.show();
   }
 
   const ResetCounter = () => {
@@ -103,19 +102,47 @@ const onChangeHandler =(event) =>{
     setCounter(0);
     navigate('/redirect')
   };  
+  const closeModal = () => {    
+    clearInterval(funRef.current);
+    setCounter(0);    
+    navigate('/redirect')
+  };  
 
   return (
     <div className="mt-4 mx-5 UserInteraction">
          <Helmet>
-                <style>{`.UserInput {${ThemeBackground}}`}</style>
+                <style>{`.UserInput{${ThemeBackground}}`}</style>
+                <style>{`.continuebtn{${ThemeBackground}}`}</style>
+                <style>{`.WPMMODAL{${ThemeBackground}}`}</style>
             </Helmet>
       <div className='d-flex'>
-        <input autocomplete="off" id='UserInput' className={`form-control me-2 UserInput ${Theme == 'Light' ? 'text-dark' : 'text-light'}`} placeholder="Start Typing..." onChange= {(e) => onChangeHandler(e)} onKeyUp={(e) => OnSpaceHandler(e)}/>                
+        <input autoComplete="off" id='UserInput' className={`form-control me-2 UserInput ${Theme == 'Light' ? 'text-dark' : 'text-light'}`} placeholder="Start Typing..." onChange= {(e) => onChangeHandler(e)} onKeyUp={(e) => OnSpaceHandler(e)}/>                
         <span id="Timer" className={`me-2 btn border ${Theme=='Light'? 'border-dark text-dark' : 'border-light text-light'}`} disabled >1:00</span>
         <button className="btn btn-primary" onClick={ResetCounter}>
         <i className="bi bi-arrow-clockwise"></i>
       </button>
-      </div>      
+      </div>
+      <div className={`modal fade WPMMODAL container-fluid`}  id="WPMmodal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div className="modal-dialog modal-dialog-centered">
+    <div className={`modal-content WPMMODAL border ${Theme =='Light'? 'text-dark border-dark' : 'text-light border-light'}`}>
+      <div className="modal-header mt-3 mx-auto">
+        <h5 className="modal-title fs-4">Congratulations!!</h5>        
+      </div>
+      <div className="modal-body text-center fw-semibold">
+        Speed: {WPM} Words Per Minute
+        <br/>
+        Correct Words: {CorrectWords}
+        <br/>
+        Wrong Words: {WrongWords}
+      </div>
+      <div className="text-center mb-3">        
+        <button onClick={closeModal} data-bs-dismiss="modal" type="button" className={`btn btn-sm bg-gradient continuebtn ${Theme =='Light'? 'text-dark border-dark' : 'text-light border-light'}`} >Continue</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
     </div>
   )
 }

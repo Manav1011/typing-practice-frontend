@@ -13,12 +13,10 @@ function NavBar({Theme,setTheme}) {
   return (
     <Navbar className={`${Theme=='Light'? 'navbar-light' : 'navbar-dark'}`}>
       <Container>
-        <Navbar.Brand href="#home">10Fingers-React</Navbar.Brand>
+        <Navbar.Brand >10Fingers-React</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
+          <Nav className="">            
             <NavDropdown title="Themes" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1" onClick={() => ChangeTheme('Lawrencium')}>Lawrencium</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2" onClick={() => ChangeTheme('Light')} >
