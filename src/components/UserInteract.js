@@ -14,6 +14,7 @@ const UserInteract = ({content, Theme , ThemeBackground}) => {
   const [CorrectWords, setCorrectWords] = useState(0);
   const [WrongWords, setWrongWords] = useState(0);  
   const CorrectChars =useRef(0)
+  const WrongChars =useRef(0)
   const [startTimer,setStartTimer]= useState(true)  
   const [Showwpm,setshowwpm]=useState(false)
   const [WPM ,setWPM]=useState(0)
@@ -71,15 +72,16 @@ const onChangeHandler =(event) =>{
           TotalKeyPress.current=TotalKeyPress.current + 1 
         }
         else{
-          if( value[i] != ' '){
+          if( value[i] === ' '){            
             CorrectChars.current = CorrectChars.current + 1
             TotalKeyPress.current=TotalKeyPress.current + 1
           }
+          else{
+            WrongChars.current= WrongChars.current +1
+          }
         }
-      }
-      CorrectChars.current = CorrectChars.current + 1
-      TotalKeyPress.current=TotalKeyPress.current + 1 
-      // document.getElementById('correctchars').innerHTML= "CorrectChars: "+CorrectChars.current +"Totalpress: "+ TotalKeyPress.current
+      }      
+      TotalKeyPress.current=TotalKeyPress.current + 1       
       setWPM(CorrectChars.current / 5)          
       if (value.length === 1) {
         event.target.value = "";
@@ -131,7 +133,7 @@ const onChangeHandler =(event) =>{
       </div>      
       <ResultModal
       wpm={WPM}      
-      accuracy={(CorrectChars.current / TotalKeyPress.current) * 100}      
+      accuracy={((CorrectChars.current - WrongChars.current) / TotalKeyPress.current) * 100}      
       wrongwords={WrongWords}
       correctwords={CorrectWords}
       closemodal={closeModal}      
