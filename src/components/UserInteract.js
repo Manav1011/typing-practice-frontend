@@ -2,12 +2,14 @@ import {React,useState,useEffect,useRef} from 'react'
 import {Helmet} from 'react-helmet';
 import Swal from 'sweetalert2'
 import $ from 'jquery'
-import { Modal } from 'bootstrap'
+import ResultModal from './ResultModal'
+import Button from 'react-bootstrap/Button';
+
 
 import { useNavigate,Link } from "react-router-dom";
 
 const UserInteract = ({content, Theme , ThemeBackground}) => {
-
+  const [modalShow, setModalShow] = useState(false);
   const [Counter, setCounter] = useState(0);
   const [CorrectWords, setCorrectWords] = useState(0);
   const [WrongWords, setWrongWords] = useState(0);  
@@ -32,13 +34,17 @@ const UserInteract = ({content, Theme , ThemeBackground}) => {
   time--;
   if (time < 0) {
     document.getElementById("UserInput").readOnly = true
-    setshowwpm(true);    
+    setshowwpm(true);
+    setModalShow(true)
     clearInterval(funRef.current);
   }
 }, 1000);
     }
 
-const onChangeHandler =(event) =>{    
+const onChangeHandler =(event) =>{   
+  if (startTimer){
+    Timer()
+    }  
   document.getElementById(Counter).scrollIntoView();
   let CurrentWord=content[Counter]+' '
   let CurrentValue=event.target.value
@@ -51,10 +57,7 @@ const onChangeHandler =(event) =>{
   }
 }
 
-  const OnSpaceHandler = (event) => {
-    if (startTimer){
-    Timer()
-    }   
+  const OnSpaceHandler = (event) => {  
     document.getElementById(Counter).classList.add("bg-secondary");
     if (event.keyCode === 32 || event.target.value[event.target.value.length - 1] == ' ') {      
       document.getElementById(Counter).classList.remove("bg-danger");
@@ -90,12 +93,7 @@ const onChangeHandler =(event) =>{
         event.target.value = "";
       }
     }
-  };
-
-  if(Showwpm){
-    let myModal = new Modal(document.getElementById('WPMmodal'), {});
-  myModal.show();
-  }
+  };  
 
   const ResetCounter = () => {
     clearInterval(funRef.current);
@@ -105,18 +103,18 @@ const onChangeHandler =(event) =>{
   const closeModal = () => {    
     clearInterval(funRef.current);
     setCounter(0);    
-    document.getElementById('DismisModal').click()    
+    setModalShow(false)
     navigate('/redirect')
   };  
 
   return (
-    <div className="mt-4 mx-5 UserInteraction">
+    <div className="mt-5 UserInteraction">
          <Helmet>
                 <style>{`.UserInput{${ThemeBackground}}`}</style>
                 <style>{`.continuebtn{${ThemeBackground}}`}</style>
                 <style>{`.WPMMODAL{${ThemeBackground}}`}</style>
             </Helmet>
-      <div className='d-flex'>
+      <div className='d-flex container'>
         <input autoCorrect="off" autoCapitalize="none" autoComplete="off" id='UserInput' className={`form-control me-2 UserInput ${Theme == 'Light' ? 'text-dark' : 'text-light'}`} placeholder="Start Typing..." onChange= {(e) => onChangeHandler(e)} onKeyUp={(e) => OnSpaceHandler(e)}/>                
         <span id="Timer" className={`me-2 btn border ${Theme=='Light'? 'border-dark text-dark' : 'border-light text-light'}`} disabled >1:00</span>
         <button className={`btn border ${Theme=='Light'? 'border-dark text-dark' : 'border-light text-light'}`} onClick={ResetCounter}>
@@ -124,29 +122,17 @@ const onChangeHandler =(event) =>{
       </button>   
       <div>          
         </div>  
-      </div>
-      <div className={`modal fade WPMMODAL container-fluid`}  id="WPMmodal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div className="modal-dialog modal-dialog-centered">
-    <div className={`modal-content WPMMODAL border ${Theme =='Light'? 'text-dark border-dark' : 'text-light border-light'}`}>
-      <div className="modal-header mt-3 mx-auto">
-        <h5 className="modal-title fs-4">Congratulations!!</h5>        
-      </div>
-      <div className="modal-body text-center fw-semibold">
-        Speed: {WPM} Words Per Minute
-        <br/>
-        Correct Words: {CorrectWords}
-        <br/>
-        Wrong Words: {WrongWords}
-      </div>
-      <div className="text-center mb-3">      
-      <button type="button" className="btn btn-secondary d-none" id="DismisModal" data-bs-dismiss="modal">Close</button>  
-        <button onClick={closeModal} data-bs-dismiss="modal" type="button" className={`btn btn-sm bg-gradient continuebtn ${Theme =='Light'? 'text-dark border-dark' : 'text-light border-light'}`} >Continue</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
+      </div>      
+      <ResultModal
+      wpm={WPM}
+      correctwords={CorrectWords}
+      wrongwords={WrongWords}
+      closemodal={closeModal}
+        theme={Theme}
+        themebackground={ThemeBackground}
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        />
     </div>
   )
 }
