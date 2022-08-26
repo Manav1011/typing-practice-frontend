@@ -17,7 +17,7 @@ const MainBody = ({Theme, ThemeText, ThemeBackground}) => {
     })
   }, []);
   return (
-    <div className={`${ThemeText}`} >
+    <div className={`${ThemeText} mx-5`} >
         <DisplayPara content={ParaContent} Theme={Theme} ThemeBackground={ThemeBackground} />
         <UserInteract content={ParaContent} Theme={Theme} ThemeBackground={ThemeBackground} />
     </div>

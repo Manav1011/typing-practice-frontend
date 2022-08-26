@@ -18,6 +18,7 @@ const UserInteract = ({content, Theme , ThemeBackground}) => {
   const [Showwpm,setshowwpm]=useState(false)
   const [WPM ,setWPM]=useState(0)
   const funRef = useRef(null);
+  const TotalKeyPress= useRef(0)
 
   let navigate = useNavigate();
 
@@ -57,23 +58,28 @@ const onChangeHandler =(event) =>{
   }
 }
 
-  const OnSpaceHandler = (event) => {  
+  const OnSpaceHandler = (event) => {
     document.getElementById(Counter).classList.add("bg-secondary");
-    if (event.keyCode === 32 || event.target.value[event.target.value.length - 1] == ' ') {      
+    let lastChar=event.target.value[event.target.value.length - 1]
+    if (lastChar == ' ') {      
       document.getElementById(Counter).classList.remove("bg-danger");
       var value = event.target.value;
       var CurrentWord=content[Counter]
       for(let i=0; i<value.length ; i++){
         if(value[i] === CurrentWord[i]){
-          CorrectChars.current = CorrectChars.current + 1          
+          CorrectChars.current = CorrectChars.current + 1
+          TotalKeyPress.current=TotalKeyPress.current + 1 
         }
         else{
           if( value[i] != ' '){
-            CorrectChars.current = CorrectChars.current - 1
+            CorrectChars.current = CorrectChars.current + 1
+            TotalKeyPress.current=TotalKeyPress.current + 1
           }
         }
       }
-      CorrectChars.current = CorrectChars.current + 1      
+      CorrectChars.current = CorrectChars.current + 1
+      TotalKeyPress.current=TotalKeyPress.current + 1 
+      // document.getElementById('correctchars').innerHTML= "CorrectChars: "+CorrectChars.current +"Totalpress: "+ TotalKeyPress.current
       setWPM(CorrectChars.current / 5)          
       if (value.length === 1) {
         event.target.value = "";
@@ -114,20 +120,21 @@ const onChangeHandler =(event) =>{
                 <style>{`.continuebtn{${ThemeBackground}}`}</style>
                 <style>{`.WPMMODAL{${ThemeBackground}}`}</style>
             </Helmet>
-      <div className='d-flex container'>
+      <div className='d-flex mx-5'>
         <input autoCorrect="off" autoCapitalize="none" autoComplete="off" id='UserInput' className={`form-control me-2 UserInput ${Theme == 'Light' ? 'text-dark' : 'text-light'}`} placeholder="Start Typing..." onChange= {(e) => onChangeHandler(e)} onKeyUp={(e) => OnSpaceHandler(e)}/>                
         <span id="Timer" className={`me-2 btn border ${Theme=='Light'? 'border-dark text-dark' : 'border-light text-light'}`} disabled >1:00</span>
         <button className={`btn border ${Theme=='Light'? 'border-dark text-dark' : 'border-light text-light'}`} onClick={ResetCounter}>
         <i className="bi bi-arrow-clockwise"></i>
-      </button>   
-      <div>          
+      </button>  
+      <div>           
         </div>  
       </div>      
       <ResultModal
-      wpm={WPM}
-      correctwords={CorrectWords}
+      wpm={WPM}      
+      accuracy={(CorrectChars.current / TotalKeyPress.current) * 100}      
       wrongwords={WrongWords}
-      closemodal={closeModal}
+      correctwords={CorrectWords}
+      closemodal={closeModal}      
         theme={Theme}
         themebackground={ThemeBackground}
         show={modalShow}
