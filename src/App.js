@@ -10,8 +10,12 @@ function App() {
   const [Theme,setTheme]=useState('Dark')
   const [ThemeBackground,setThemeBackground]=useState()
   const [ThemeText,setThemeText]=useState()
+  const [Level,setLevel]=useState('Easy')
   
   useEffect(() => {
+    if(localStorage.getItem('Level')){
+      setTheme(localStorage.getItem('Level'))
+    }
 
       if(localStorage.getItem('Theme')){
         setTheme(localStorage.getItem('Theme'))
@@ -75,9 +79,9 @@ function App() {
        <Helmet>
                 <style>{`body {${ThemeBackground}}`}</style>
             </Helmet>
-    <NavBar Theme={Theme} setTheme={setTheme}/>
+    <NavBar Theme={Theme} Level={Level} setTheme={setTheme} setLevel={setLevel}/>
     <Routes>
-      <Route path='/' exact element={<MainBody Theme={Theme} ThemeText={ThemeText} ThemeBackground={ThemeBackground}/>}/>
+      <Route path='/' exact element={<MainBody Level={Level} Theme={Theme} ThemeText={ThemeText} ThemeBackground={ThemeBackground}/>}/>
       <Route path='/redirect' exact element={<Redirect/>}/>
       </Routes>
     </BrowserRouter>
