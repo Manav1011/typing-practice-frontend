@@ -11,8 +11,8 @@ const MainBody = ({Theme, ThemeText, ThemeBackground,Level}) => {
       setContent(['Loading ....'])
       fetch('https://ten-fingers-django.herokuapp.com/Easy',{
         'method':'GET',
-      }).then((response) => {
-        return response.json()
+      }).then((response) => {        
+        return response.json()        
       }).then((data) => {
         setContent(data.split(/(\s+)/).filter( e => e.trim().length > 0));
       })
@@ -41,10 +41,10 @@ const MainBody = ({Theme, ThemeText, ThemeBackground,Level}) => {
       setContent(['Loading ....'])
       fetch('https://ten-fingers-django.herokuapp.com/Hard',{
         'method':'GET',
-      }).then((response) => {
+      }).then((response) => {        
         return response.json()
-      }).then((data) => {
-        setContent(data.split(/(\s+)/).filter( e => e.trim().length > 0));
+      }).then((data) => {        
+        setContent(data[0].split(/(\s+)/).filter( e => e.trim().length > 0));
       })
     }
   }, [Level]);
