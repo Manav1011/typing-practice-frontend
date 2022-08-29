@@ -49,7 +49,7 @@ const MainBody = ({Theme, ThemeText, ThemeBackground,Level}) => {
     }
   }, [Level]);
   return (
-    <div className={`${ThemeText}`} style={{margin: '2vh 15vh 10vh 15vh'}} >
+    <div className={`${ThemeText}`} >
         <DisplayPara content={ParaContent} Theme={Theme} ThemeBackground={ThemeBackground} />
         <UserInteract content={ParaContent} Theme={Theme} ThemeBackground={ThemeBackground} />
     </div>

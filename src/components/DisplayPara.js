@@ -3,23 +3,22 @@ import {Helmet} from 'react-helmet';
 
 function DisplayPara({content,Theme,ThemeBackground}) {          
   return (
-    <div className={``}>
-      <div className="">
-            <Helmet>
-                <style>{`.ParaCard {${ThemeBackground}}`}</style>
-            </Helmet>
-      <Card className="ParaCard"  style={{fontSize: '2rem', maxHeight: '50vh' , overflow: 'scroll'}}>
+    <div className={`container mt-5`} >
+          
+      <Card className="ParaCard container bg-transparent border border-0"  style={{maxHeight: '25vh' , overflow: 'scroll'}}>
         <Card.Body> 
           {
             content.map( (value,index) => {
-                return <div className='fw-normal bg-opacity-50 pt-2' key={index} id={index} style={{display: 'inline-block'}}>{value} &nbsp;</div>
+                return <div className='fw-normal  rounded' key={index} id={index} style={{display: 'inline-block'}}>{
+                  value 
+                  }
+                   &nbsp;</div>
             })
         }
         
         </Card.Body>
       </Card>    
-    </div>
-    </div>
+    </div>    
   );
 }
 

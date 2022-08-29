@@ -19,11 +19,11 @@ const UserInteract = ({content, Theme , ThemeBackground}) => {
   const [Showwpm,setshowwpm]=useState(false)
   const [WPM ,setWPM]=useState(0)
   const funRef = useRef(null);
-  const TotalKeyPress= useRef(0)
+  const TotalKeyPress= useRef(0)    
 
   let navigate = useNavigate();
 
-  const Timer = () => {    
+  const Timer = () => {
     var time = 59;
     setStartTimer(false)
     funRef.current= setInterval(function() {
@@ -43,29 +43,40 @@ const UserInteract = ({content, Theme , ThemeBackground}) => {
 }, 1000);
     }
 
-const onChangeHandler =(event) =>{   
+const onChangeHandler =(event) =>{  
+  
   if (startTimer){
     Timer()
-    }  
+    }       
+      
+  try{  
+    document.getElementById(`${Counter}char${event.target.selectionStart}`).focus()     
+  }catch(err){
+
+  }
   document.getElementById(Counter).scrollIntoView();
   let CurrentWord=content[Counter]+' '
   let CurrentValue=event.target.value
+  let length=CurrentValue.length
+  let lastChar=CurrentValue[length-1]  
+  if(CurrentValue=== ''){
+    document.getElementById(Counter).classList.remove("text-danger"); 
+  }  
   let result=CurrentWord.includes(CurrentValue)
   if (result){    
-    document.getElementById(Counter).classList.remove("bg-danger");
+    document.getElementById(Counter).classList.remove("text-danger");
   }
   else{
-    document.getElementById(Counter).classList.add("bg-danger");    
+    document.getElementById(Counter).classList.add("text-danger");    
   }
 }
 
   const OnSpaceHandler = (event) => {
-    document.getElementById(Counter).classList.add("bg-secondary");
     let lastChar=event.target.value[event.target.value.length - 1]
     let result=event.target.value.includes(' ')
-    if (result) {      
-      document.getElementById(Counter).classList.remove("bg-danger");
-      var value = event.target.value;
+    if (result) {          
+      document.getElementById(Counter).classList.remove("text-danger");
+      var value = event.target.value;      
       var CurrentWord=content[Counter]
       for(let i=0; i<value.length ; i++){
         if(value[i] === CurrentWord[i]){
@@ -73,9 +84,8 @@ const onChangeHandler =(event) =>{
           TotalKeyPress.current=TotalKeyPress.current + 1 
         }
         else{
-          if( value[i] === ' '){            
-            CorrectChars.current = CorrectChars.current + 1
-            // TotalKeyPress.current=TotalKeyPress.current + 1
+          if( value[i] === ' '){        
+            CorrectChars.current = CorrectChars.current + 1            
           }
           else{
             WrongChars.current= WrongChars.current +1
@@ -88,21 +98,21 @@ const onChangeHandler =(event) =>{
       if (value.length === 1) {
         event.target.value = "";
       } else {
-        setCounter(Counter + 1);        
+        setCounter(Counter + 1);         
         if (event.target.value.trim() === content[Counter]) {
-          document.getElementById(Counter).classList.remove("bg-secondary");
-          document.getElementById(Counter + 1).classList.add("bg-secondary");
+          document.getElementById(Counter + 1).classList.add("fw-bold");
+          document.getElementById(Counter).classList.remove("fw-bold");
           document.getElementById(Counter).classList.add("text-success");
           setCorrectWords(CorrectWords + 1);
         } else {
-          document.getElementById(Counter).classList.remove("bg-secondary");
-          document.getElementById(Counter + 1).classList.add("bg-secondary");
+          document.getElementById(Counter + 1).classList.add("fw-bold");
+          document.getElementById(Counter).classList.remove("fw-bold");
           document.getElementById(Counter).classList.add("text-danger");
           setWrongWords(WrongWords + 1);
         }
         event.target.value = "";
-      }
-    }
+      }      
+    }      
   };  
 
   const ResetCounter = () => {
@@ -118,16 +128,17 @@ const onChangeHandler =(event) =>{
   };  
 
   return (
+
     <div className="mt-5 UserInteraction">
          <Helmet>
                 <style>{`.UserInput{${ThemeBackground}}`}</style>
                 <style>{`.continuebtn{${ThemeBackground}}`}</style>
                 <style>{`.WPMMODAL{${ThemeBackground}}`}</style>
             </Helmet>
-      <div className='d-flex mx-5'>
-        <input autoCorrect="off" autoCapitalize="none" autoComplete="off" id='UserInput' className={`form-control me-2 UserInput ${Theme == 'Light' ? 'text-dark' : 'text-light'}`} placeholder="Start Typing..." onChange= {(e) => onChangeHandler(e)} onKeyUp={(e) => OnSpaceHandler(e)}/>                
-        <span id="Timer" className={`me-2 btn border ${Theme=='Light'? 'border-dark text-dark' : 'border-light text-light'}`} disabled >1:00</span>
-        <button className={`btn border ${Theme=='Light'? 'border-dark text-dark' : 'border-light text-light'}`} onClick={ResetCounter}>
+      <div className='d-flex container'>
+        <input autoFocus onBlur={({ target }) => target.focus()}  autoCorrect="off" autoCapitalize="none" autoComplete="off" id='UserInput' className={`form-control me-2 UserInput ${Theme == 'Light' ? 'text-dark' : 'text-light'}`} placeholder="Start Typing..." onChange= {(e) => onChangeHandler(e)} onKeyUp={(e) => OnSpaceHandler(e)}/>                
+        <span id="Timer" className={` me-2 btn border ${Theme=='Light'? 'btn-outline-dark' : 'btn-outline-light'}`} disabled >1:00</span>
+        <button className={` btn border ${Theme=='Light'? 'btn-outline-dark' : 'btn-outline-light'}`} onClick={ResetCounter}>
         <i className="bi bi-arrow-clockwise"></i>
       </button>  
       <div>            
