@@ -4,6 +4,7 @@ import {Helmet} from 'react-helmet';
 import MainBody from './components/MainBody';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Redirect from './components/Redirect';
+import bootstrap from 'bootstrap'
 
 
 function App() {
