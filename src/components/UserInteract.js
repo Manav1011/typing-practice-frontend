@@ -75,7 +75,7 @@ const onChangeHandler =(event) =>{
         else{
           if( value[i] === ' '){            
             CorrectChars.current = CorrectChars.current + 1
-            TotalKeyPress.current=TotalKeyPress.current + 1
+            // TotalKeyPress.current=TotalKeyPress.current + 1
           }
           else{
             WrongChars.current= WrongChars.current +1
@@ -83,6 +83,7 @@ const onChangeHandler =(event) =>{
         }
       }      
       TotalKeyPress.current=TotalKeyPress.current + 1       
+      
       setWPM(CorrectChars.current / 5)          
       if (value.length === 1) {
         event.target.value = "";
@@ -129,7 +130,7 @@ const onChangeHandler =(event) =>{
         <button className={`btn border ${Theme=='Light'? 'border-dark text-dark' : 'border-light text-light'}`} onClick={ResetCounter}>
         <i className="bi bi-arrow-clockwise"></i>
       </button>  
-      <div>           
+      <div>            
         </div>  
       </div>      
       <ResultModal
