@@ -135,7 +135,7 @@ const onChangeHandler =(event) =>{
                 <style>{`.continuebtn{${ThemeBackground}}`}</style>
                 <style>{`.WPMMODAL{${ThemeBackground}}`}</style>
             </Helmet>
-      <div className='d-flex container'>
+      <div className='d-flex'>
         <input autoFocus onBlur={({ target }) => target.focus()}  autoCorrect="off" autoCapitalize="none" autoComplete="off" id='UserInput' className={`form-control me-2 UserInput ${Theme == 'Light' ? 'text-dark' : 'text-light'}`} placeholder="Start Typing..." onChange= {(e) => onChangeHandler(e)} onKeyUp={(e) => OnSpaceHandler(e)}/>                
         <span id="Timer" className={` me-2 btn border ${Theme=='Light'? 'btn-outline-dark' : 'btn-outline-light'}`} disabled >1:00</span>
         <button className={` btn border ${Theme=='Light'? 'btn-outline-dark' : 'btn-outline-light'}`} onClick={ResetCounter}>

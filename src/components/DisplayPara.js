@@ -3,9 +3,9 @@ import {Helmet} from 'react-helmet';
 
 function DisplayPara({content,Theme,ThemeBackground}) {          
   return (
-    <div className={`container mt-5`} >
+    <div className={`mt-5`} >
           
-      <Card className="ParaCard container bg-dark border border-0"  style={{maxHeight: '25vh' , overflow: 'scroll'}}>
+      <Card className="ParaCard bg-transparent border border-0"  style={{maxHeight: '25vh' , overflow: 'scroll'}}>
         <Card.Body> 
           {
             content.map( (value,index) => {
