@@ -8,7 +8,7 @@ function DisplayPara({content,Theme,ThemeBackground}) {
             <Helmet>
                 <style>{`.ParaCard {${ThemeBackground}}`}</style>
             </Helmet>
-      <Card className="ParaCard"  style={{fontSize: '1.5rem', maxHeight: '20vh' , overflow: 'scroll'}}>
+      <Card className="ParaCard"  style={{fontSize: '1.5rem', maxHeight: '50vh' , overflow: 'scroll'}}>
         <Card.Body> 
           {
             content.map( (value,index) => {

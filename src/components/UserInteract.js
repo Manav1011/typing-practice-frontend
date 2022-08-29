@@ -62,7 +62,8 @@ const onChangeHandler =(event) =>{
   const OnSpaceHandler = (event) => {
     document.getElementById(Counter).classList.add("bg-secondary");
     let lastChar=event.target.value[event.target.value.length - 1]
-    if (lastChar == ' ') {      
+    let result=event.target.value.includes(' ')
+    if (result) {      
       document.getElementById(Counter).classList.remove("bg-danger");
       var value = event.target.value;
       var CurrentWord=content[Counter]
