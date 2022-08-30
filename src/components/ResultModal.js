@@ -16,7 +16,7 @@ const ResultModal = (props) => {
               <Helmet>                
                 <style>{`.WPMMODAL {${props.themebackground}}`}</style>
             </Helmet>          
-          <Modal.Body className={`WPMMODAL rounded ${props.theme =='Light'? 'text-dark' : 'text-light'}`}>
+          <Modal.Body className={`WPMMODAL border rounded ${props.theme =='Light'? 'text-dark border-dark' : 'text-light border-light'}`}>
             <h4>Your Score</h4>
             <hr></hr>
                     <p>
