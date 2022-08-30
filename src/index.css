@@ -45,10 +45,10 @@ font-size:1.8rem;
 }
 @media only screen and (max-width:600px) {
   .ParaCard {
-    margin:0vh 3vh 0vh 3vh;
+    margin:0vh 0vh 0vh 0vh;
   }
   .UserInteraction{
-    margin:0vh 3vh 0vh 3vh;
+    margin:0vh 0vh 0vh 0vh;
   }
   
 }
