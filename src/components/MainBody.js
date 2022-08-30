@@ -4,8 +4,10 @@ import {useState,useEffect} from 'react'
 import UserInteract from './UserInteract'
 
 
-const MainBody = ({Theme, ThemeText, ThemeBackground,Level}) => {
+const MainBody = ({Theme, ThemeText, ThemeBackground,Level,Sound}) => {
   const [ParaContent, setContent] = useState([]);  
+  const [Reload,setReload]=useState(false)
+  
   useEffect(() => {    
     if (Level === 'Easy'){
       setContent(['Loading ....'])
@@ -17,6 +19,8 @@ const MainBody = ({Theme, ThemeText, ThemeBackground,Level}) => {
         setContent(data.split(/(\s+)/).filter( e => e.trim().length > 0));
       })
     }
+
+    
     else if (Level === 'Medium'){
       setContent(['Loading ....'])
       fetch('https://ten-fingers-django.herokuapp.com/Medium',{
@@ -47,11 +51,11 @@ const MainBody = ({Theme, ThemeText, ThemeBackground,Level}) => {
         setContent(data[0].split(/(\s+)/).filter( e => e.trim().length > 0));
       })
     }
-  }, [Level]);
+  }, [Level,Reload]);
   return (
     <div className={`${ThemeText}`} >
         <DisplayPara content={ParaContent} Theme={Theme} ThemeBackground={ThemeBackground} />
-        <UserInteract content={ParaContent} Theme={Theme} ThemeBackground={ThemeBackground} />
+        <UserInteract Sound={Sound} content={ParaContent} setReload={setReload} Reload={Reload} Theme={Theme} ThemeBackground={ThemeBackground} />
     </div>
   )
 }

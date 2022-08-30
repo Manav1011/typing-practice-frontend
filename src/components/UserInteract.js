@@ -5,12 +5,18 @@ import $ from 'jquery'
 import ResultModal from './ResultModal'
 import Button from 'react-bootstrap/Button';
 import {Howl, Howler} from 'howler';
-import Sound from '../audioclips/key1.mp3'
+import razergreen from '../audioclips/razergreen.wav'
+import cream from '../audioclips/nkcream.mp3'
+import mxspeedsilver from '../audioclips/mxspeedsilver.wav'
+import holypanda from '../audioclips/holypanda.wav'
+import bruh from '../audioclips/bruh.mp3'
+import metal from '../audioclips/key2.wav'
+
 
 
 import { useNavigate,Link } from "react-router-dom";
 
-const UserInteract = ({content, Theme , ThemeBackground}) => {
+const UserInteract = ({content, Theme , ThemeBackground,Sound,Reload,setReload}) => {
   const [modalShow, setModalShow] = useState(false);
   const [Counter, setCounter] = useState(0);
   const [CorrectWords, setCorrectWords] = useState(0);
@@ -23,16 +29,53 @@ const UserInteract = ({content, Theme , ThemeBackground}) => {
   const funRef = useRef(null);
   const TotalKeyPress= useRef(0)    
   const [allLoaded,setAllLoaded]=useState(false)
-  const [boldFirst,setBoldFirst]=useState(false)
+  const [boldFirst,setBoldFirst]=useState(false)  
+  const [sound,setSound]=useState()
 
   let navigate = useNavigate();
 
   
+  useEffect(() => {    
+    if (allLoaded){      
+      if (Sound === 'Cream'){
+        setSound(new Howl({
+          src: cream,    
+          volume: 1,    
+        }))
+      } 
+      if (Sound === 'RazerGreen'){
+        setSound(new Howl({
+          src: razergreen,    
+          volume: 0.3,    
+        }))
+      } 
+      if (Sound === 'MXSpeedsSilver'){
+        setSound(new Howl({
+          src: mxspeedsilver,    
+          volume: 0.5,    
+        }))
+      }
+      if (Sound === 'HolyPanda'){
+        setSound(new Howl({
+          src: holypanda,    
+          volume: 0.5,    
+        }))
+      } 
+      if (Sound === 'Bruh'){
+        setSound(new Howl({
+          src: bruh,    
+          volume: 0.5,    
+        }))
+      } 
+      if (Sound === 'Metal'){
+        setSound(new Howl({
+          src: metal,    
+          volume: 0.2,    
+        }))
+      } 
+    }
+  }, [Sound]);
   
-  var sound = new Howl({
-    src: Sound,    
-    volume: 0.5,    
-  });
   
 
 
@@ -41,7 +84,7 @@ const UserInteract = ({content, Theme , ThemeBackground}) => {
   },[])
 
   useEffect(() => {
-    if (allLoaded){
+    if (allLoaded){      
       document.getElementById(Counter).classList.remove("text-muted",'fw-bolder');
       document.getElementById(Counter).classList.add('fw-bolder');
     }
@@ -97,7 +140,12 @@ const onChangeHandler =(event) =>{
 }
 
   const OnSpaceHandler = (event) => {
-    sound.play()
+    try{
+      sound.play()
+    }
+    catch (err){
+      
+    }
     let lastChar=event.target.value[event.target.value.length - 1]
     let result=event.target.value.includes(' ')
     if (result) {          
@@ -145,8 +193,8 @@ const onChangeHandler =(event) =>{
 
   const ResetCounter = () => {
     clearInterval(funRef.current);
-    setCounter(0);
-    navigate('/redirect')
+    setCounter(0);    
+    setReload(!Reload)
   };  
   const closeModal = () => {    
     clearInterval(funRef.current);

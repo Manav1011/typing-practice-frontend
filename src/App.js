@@ -11,11 +11,21 @@ function App() {
   const [ThemeBackground,setThemeBackground]=useState()
   const [ThemeText,setThemeText]=useState()
   const [Level,setLevel]=useState('Easy')
-  
+  const [Sound,setSound]=useState('Cream')
+
+  useEffect(()=> {
+    if(localStorage.getItem('Sound')){
+      setSound(localStorage.getItem('Sound'))
+    }
+  },[])
+
+
+
   useEffect(() => {
     if(localStorage.getItem('Level')){
       setTheme(localStorage.getItem('Level'))
     }
+    
 
       if(localStorage.getItem('Theme')){
         setTheme(localStorage.getItem('Theme'))
@@ -79,10 +89,10 @@ function App() {
        <Helmet>
                 <style>{`body {${ThemeBackground}}`}</style>
             </Helmet>
-    <NavBar Theme={Theme} Level={Level} setTheme={setTheme} setLevel={setLevel}/>
+    <NavBar Theme={Theme} Level={Level} setTheme={setTheme} setLevel={setLevel} Sound={Sound} setSound={setSound}/>
     <Routes>
-      <Route path='/' exact element={<MainBody Level={Level} Theme={Theme} ThemeText={ThemeText} ThemeBackground={ThemeBackground}/>}/>
-      <Route path='/redirect' exact element={<Redirect/>}/>
+      <Route path='/' exact element={<MainBody Level={Level} Sound={Sound} Theme={Theme} ThemeText={ThemeText} ThemeBackground={ThemeBackground}/>}/>
+      <Route path='/redirect' exact element={<Redirect Sound={Sound}/>}/>
       </Routes>
     </BrowserRouter>
   </div>
