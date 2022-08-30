@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+# Typing Practice App Using React and Django
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## The site's live and up running [Here](https://10fingers-react.netlify.app)
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<table class="table table-light border border-success border-5">
+    <thead>
+      <tr>
+        <th scope="col" class='text-center'><h3>Core Functionalities</h3></th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+     <tr>
+        <td>App comes with a minimalist design and will start counting wpm as the user types</td>
+    </tr>
+    <tr>
+        <td>This app tracks user's key strokes and identify if the user has typed correct characters or not</td>
+    </tr>
+     <tr>
+        <td>Accordging to the correct characters typed by user it counts Words Per Minute, Correct Words and Wrong Words that user typed, Accuracy of the user</td>
+     </tr>
+     <tr>
+        <td>User can use this app on phone also but a cumputer with keyboard is prefferable</td>
+     </tr>
+     <tr>
+        <td>I have added 7 different themes.</td>
+     </tr>
+     <tr>
+        <td>Also 4 different modes like Easy, Medium, Hard, Extreme </td>
+     </tr>
+     <tr>
+        <td>Django works as backend and provides words for different modes</td>
+     </tr>
+     <tr>
+        <td>The core logic for counting results is written in javascript</td>
+     </tr>
+    </tbody>
+  </table>    
+  
+   <table class="table table-light border border-success border-5 mt-5">
+    <thead>
+      <tr>
+        <th scope="col" class='text-center'><h3>Technology Used</h3></th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+     <tr>
+        <td>Backend Framework - Django 4.0.5</td>
+     </tr>     
+     <tr>
+        <td>Frontend Library - ReactJS</td>
+     </tr>
+     <tr>
+        <td>Additional Libraries - Bootstrap, Jquery, Google Fonts</td>
+     </tr>    
+    </tbody>
+  </table> 
