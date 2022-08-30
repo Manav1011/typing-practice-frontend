@@ -24,7 +24,7 @@ const UserInteract = ({content, Theme , ThemeBackground}) => {
   let navigate = useNavigate();
 
   const Timer = () => {
-    var time = 59;
+    var time = 5;
     setStartTimer(false)
     funRef.current= setInterval(function() {
   var seconds = time ;
@@ -153,7 +153,9 @@ const onChangeHandler =(event) =>{
         theme={Theme}
         themebackground={ThemeBackground}
         show={modalShow}
-        onHide={() => setModalShow(false)}
+        onHide={() => setModalShow(false)}    
+        backdrop="static"
+        keyboard={false}    
         />
     </div>
   )

@@ -9,31 +9,28 @@ const ResultModal = (props) => {
   return (    
         <Modal
           {...props}
-          size="lg"
-          aria-labelledby="contained-modal-title-vcenter"
+          size="sm"
           centered
-          className='WPMMODAL  text-center '
+          className='text-center'
         >
               <Helmet>                
-                <style>{`.WPMMODAL{${props.themebackground}}`}</style>
-            </Helmet>
-          <Modal.Header closeButton className={`WPMMODAL border ${props.theme =='Light'? 'text-dark border-dark' : 'text-light border-light'}`}>
-            <Modal.Title id="contained-modal-title-vcenter">
-              Congratulations!!
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body className={`WPMMODAL border ${props.theme =='Light'? 'text-dark border-dark' : 'text-light border-light'}`}>
+                <style>{`.WPMMODAL {${props.themebackground}}`}</style>
+            </Helmet>          
+          <Modal.Body className={`WPMMODAL rounded ${props.theme =='Light'? 'text-dark' : 'text-light'}`}>
             <h4>Your Score</h4>
+            <hr></hr>
                     <p>
                 Speed: {props.wpm} Words Per Minute
-                <br/>
+                <hr></hr>
+                
                 Accuracy: {props.accuracy}%
-                <br/>
+                <hr></hr>
                 Correct Words: {props.correctwords}
-                <br/>
+                <hr></hr>
                 Wrong Words: {props.wrongwords}
+                <hr></hr>
             </p>
-            <button onClick={props.closemodal} data-bs-dismiss="modal" type="button" className={`btn btn-sm bg-gradient continuebtn ${props.theme =='Light'? 'text-dark border-dark' : 'text-light border-light'}`} >Continue</button>      
+            <button onClick={props.closemodal} data-bs-dismiss="modal" type="button" className={`btn btn-md bg-gradient continuebtn ${props.theme =='Light'? 'text-dark border-dark' : 'text-light border-light'}`} >Continue</button>      
           </Modal.Body>                   
         </Modal>
       );
