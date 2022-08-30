@@ -4,6 +4,8 @@ import Swal from 'sweetalert2'
 import $ from 'jquery'
 import ResultModal from './ResultModal'
 import Button from 'react-bootstrap/Button';
+import {Howl, Howler} from 'howler';
+import Sound from '../audioclips/key1.mp3'
 
 
 import { useNavigate,Link } from "react-router-dom";
@@ -24,6 +26,14 @@ const UserInteract = ({content, Theme , ThemeBackground}) => {
   const [boldFirst,setBoldFirst]=useState(false)
 
   let navigate = useNavigate();
+
+  
+  
+  var sound = new Howl({
+    src: Sound,    
+    volume: 0.5,    
+  });
+  
 
 
   useEffect(() => {
@@ -87,6 +97,7 @@ const onChangeHandler =(event) =>{
 }
 
   const OnSpaceHandler = (event) => {
+    sound.play()
     let lastChar=event.target.value[event.target.value.length - 1]
     let result=event.target.value.includes(' ')
     if (result) {          
