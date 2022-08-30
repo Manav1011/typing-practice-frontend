@@ -9,7 +9,7 @@ function DisplayPara({content,Theme,ThemeBackground}) {
         <Card.Body> 
           {
             content.map( (value,index) => {
-                return <div className='fw-normal  rounded' key={index} id={index} style={{display: 'inline-block'}}>{
+                return <div className='text-muted srounded' key={index} id={index} style={{display: 'inline-block'}}>{
                   value 
                   }
                    &nbsp;</div>

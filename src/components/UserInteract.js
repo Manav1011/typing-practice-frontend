@@ -20,8 +20,23 @@ const UserInteract = ({content, Theme , ThemeBackground}) => {
   const [WPM ,setWPM]=useState(0)
   const funRef = useRef(null);
   const TotalKeyPress= useRef(0)    
+  const [allLoaded,setAllLoaded]=useState(false)
+  const [boldFirst,setBoldFirst]=useState(false)
 
   let navigate = useNavigate();
+
+
+  useEffect(() => {
+    setAllLoaded(true)
+  },[])
+
+  useEffect(() => {
+    if (allLoaded){
+      document.getElementById(Counter).classList.remove("text-muted",'fw-bolder');
+      document.getElementById(Counter).classList.add('fw-bolder');
+    }
+  },[allLoaded])
+
 
   const Timer = () => {
     var time = 59;
@@ -100,13 +115,15 @@ const onChangeHandler =(event) =>{
       } else {
         setCounter(Counter + 1);         
         if (event.target.value.trim() === content[Counter]) {
-          document.getElementById(Counter + 1).classList.add("fw-bold");
-          document.getElementById(Counter).classList.remove("fw-bold");
+          document.getElementById(Counter + 1).classList.remove("text-muted");
+          document.getElementById(Counter).classList.remove("text-muted",'fw-bolder');
+          document.getElementById(Counter + 1).classList.add("fw-bolder");
           document.getElementById(Counter).classList.add("text-success");
           setCorrectWords(CorrectWords + 1);
         } else {
-          document.getElementById(Counter + 1).classList.add("fw-bold");
-          document.getElementById(Counter).classList.remove("fw-bold");
+          document.getElementById(Counter + 1).classList.remove("text-muted");
+          document.getElementById(Counter).classList.remove("text-muted",'fw-bolder');
+          document.getElementById(Counter + 1).classList.add("fw-bolder");
           document.getElementById(Counter).classList.add("text-danger");
           setWrongWords(WrongWords + 1);
         }
