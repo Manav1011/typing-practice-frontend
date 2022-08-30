@@ -13,11 +13,12 @@ function App() {
   const [Level,setLevel]=useState('Easy')
   const [Sound,setSound]=useState('Cream')
 
-  useEffect(()=> {
-    if(localStorage.getItem('Sound')){
+
+  useEffect(() => {
+    if (localStorage.getItem('Sound')) {
       setSound(localStorage.getItem('Sound'))
     }
-  },[])
+  },[Sound])
 
 
 
@@ -25,7 +26,6 @@ function App() {
     if(localStorage.getItem('Level')){
       setTheme(localStorage.getItem('Level'))
     }
-    
 
       if(localStorage.getItem('Theme')){
         setTheme(localStorage.getItem('Theme'))

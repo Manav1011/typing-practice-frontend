@@ -1,9 +1,6 @@
 import {React,useState,useEffect,useRef} from 'react'
 import {Helmet} from 'react-helmet';
-import Swal from 'sweetalert2'
-import $ from 'jquery'
 import ResultModal from './ResultModal'
-import Button from 'react-bootstrap/Button';
 import {Howl, Howler} from 'howler';
 import razergreen from '../audioclips/razergreen.wav'
 import cream from '../audioclips/nkcream.mp3'
@@ -29,14 +26,12 @@ const UserInteract = ({content, Theme , ThemeBackground,Sound,Reload,setReload})
   const funRef = useRef(null);
   const TotalKeyPress= useRef(0)    
   const [allLoaded,setAllLoaded]=useState(false)
-  const [boldFirst,setBoldFirst]=useState(false)  
   const [sound,setSound]=useState()
 
   let navigate = useNavigate();
 
   
-  useEffect(() => {    
-    if (allLoaded){      
+  useEffect(() => {      
       if (Sound === 'Cream'){
         setSound(new Howl({
           src: cream,    
@@ -72,8 +67,7 @@ const UserInteract = ({content, Theme , ThemeBackground,Sound,Reload,setReload})
           src: metal,    
           volume: 0.2,    
         }))
-      } 
-    }
+      }      
   }, [Sound]);
   
   
@@ -100,10 +94,10 @@ const UserInteract = ({content, Theme , ThemeBackground,Sound,Reload,setReload})
   if (seconds.toString().length == 1) {
     seconds =  seconds;
   }
-  document.getElementById("Timer").innerHTML =+ seconds;  
+  document.getElementById("Timer").innerHTML =+ seconds;
   time--;
   if (time < 0) {
-    document.getElementById("UserInput").readOnly = true
+    document.getElementById("UserInput").readOnly = true;
     setshowwpm(true);
     setModalShow(true)
     clearInterval(funRef.current);
@@ -115,8 +109,7 @@ const onChangeHandler =(event) =>{
   
   if (startTimer){
     Timer()
-    }       
-      
+    }    
   try{  
     document.getElementById(`${Counter}char${event.target.selectionStart}`).focus()     
   }catch(err){
@@ -141,7 +134,9 @@ const onChangeHandler =(event) =>{
 
   const OnSpaceHandler = (event) => {
     try{
-      sound.play()
+      if(Sound !== 'Mute'){
+        sound.play()
+      }
     }
     catch (err){
       
@@ -191,16 +186,22 @@ const onChangeHandler =(event) =>{
     }      
   };  
 
-  const ResetCounter = () => {
+  const ResetCounter = () => {    
     clearInterval(funRef.current);
-    setCounter(0);    
+    setStartTimer(true)
+    document.getElementById("Timer").innerHTML = '1:00';
+    setCounter(0);
     setReload(!Reload)
   };  
-  const closeModal = () => {    
+  const closeModal = () => {   
+    document.getElementById("UserInput").value = '';
+    document.getElementById("UserInput").readOnly = false;
+    document.getElementById("Timer").innerHTML = '1:00';
+    setModalShow(false) 
     clearInterval(funRef.current);
+    setStartTimer(true)
     setCounter(0);    
-    setModalShow(false)
-    navigate('/redirect')
+    setReload(!Reload)    
   };  
 
   return (

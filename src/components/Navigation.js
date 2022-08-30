@@ -22,16 +22,6 @@ function NavBar({Theme,setTheme,setLevel,Level,Sound,setSound}) {
     setLevel(ChosenLevel)
     localStorage.setItem('Level',ChosenLevel)
    }
-   const Mute = () => {
-    setShowSounds(!ShowSounds)    
-    if (ShowSounds){
-      setSound(null)
-      localStorage.setItem('Sound',null)      
-  }else{
-    setSound('Cream')
-      localStorage.setItem('Sound',Sound)      
-  }
-   }
   return (
     <Navbar className={`${Theme=='Light'? 'navbar-light' : 'navbar-dark'}`}>
       <Container>
@@ -74,7 +64,10 @@ function NavBar({Theme,setTheme,setLevel,Level,Sound,setSound}) {
                 Extreme
               </NavDropdown.Item>
             </NavDropdown>
-            {ShowSounds ? <NavDropdown title={<i id="MuteIcon" className="bi bi-volume-up" onClick={()=> Mute()}></i>} id="basic-nav-dropdown">
+            <NavDropdown title={Sound} id="basic-nav-dropdown">
+            <NavDropdown.Item  onClick={() => {ChangeSound('Mute')}}>
+                Mute
+            </NavDropdown.Item>
             <NavDropdown.Item  onClick={() => {ChangeSound('Cream')}} >
                 Cream
               </NavDropdown.Item>
@@ -93,7 +86,7 @@ function NavBar({Theme,setTheme,setLevel,Level,Sound,setSound}) {
               <NavDropdown.Item  onClick={() => {ChangeSound('Metal')}}>
                 Metal
               </NavDropdown.Item>
-            </NavDropdown> :<Nav.Link><i id="MuteIcon" className="bi bi-volume-up" onClick={()=> Mute()}></i></Nav.Link>}
+            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>
