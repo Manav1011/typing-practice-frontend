@@ -18,8 +18,7 @@ const ResultModal = (props) => {
             </Helmet>          
           <Modal.Body className={`WPMMODAL border rounded ${props.theme =='Light'? 'text-dark border-dark' : 'text-light border-light'}`}>
             <h4>Your Score</h4>
-            <hr></hr>
-                    <p>
+            <hr></hr>                    
                 Speed: {props.wpm} Words Per Minute
                 <hr></hr>
                 
@@ -28,8 +27,7 @@ const ResultModal = (props) => {
                 Correct Words: {props.correctwords}
                 <hr></hr>
                 Wrong Words: {props.wrongwords}
-                <hr></hr>
-            </p>
+                <hr></hr>            
             <button onClick={props.closemodal} data-bs-dismiss="modal" type="button" className={`btn btn-md bg-gradient continuebtn ${props.theme =='Light'? 'text-dark border-dark' : 'text-light border-light'}`} >Continue</button>      
           </Modal.Body>                   
         </Modal>

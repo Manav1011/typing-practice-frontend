@@ -21,7 +21,6 @@ const UserInteract = ({content, Theme , ThemeBackground,Sound,Reload,setReload})
   const CorrectChars =useRef(0)
   const WrongChars =useRef(0)
   const [startTimer,setStartTimer]= useState(true)  
-  const [Showwpm,setshowwpm]=useState(false)
   const [WPM ,setWPM]=useState(0)
   const funRef = useRef(null);
   const TotalKeyPress= useRef(0)    
@@ -97,16 +96,14 @@ const UserInteract = ({content, Theme , ThemeBackground,Sound,Reload,setReload})
   document.getElementById("Timer").innerHTML =+ seconds;
   time--;
   if (time < 0) {
-    document.getElementById("UserInput").readOnly = true;
-    setshowwpm(true);
+    clearInterval(funRef.current);    
+    document.getElementById("UserInput").readOnly = true;    
     setModalShow(true)
-    clearInterval(funRef.current);
   }
 }, 1000);
     }
 
 const onChangeHandler =(event) =>{  
-  
   if (startTimer){
     Timer()
     }    
@@ -163,7 +160,7 @@ const onChangeHandler =(event) =>{
       }      
       TotalKeyPress.current=TotalKeyPress.current + 1       
       
-      setWPM(CorrectChars.current / 5)          
+      setWPM(CorrectChars.current / 5)      
       if (value.length === 1) {
         event.target.value = "";
       } else {
@@ -188,20 +185,16 @@ const onChangeHandler =(event) =>{
 
   const ResetCounter = () => {    
     clearInterval(funRef.current);
-    setStartTimer(true)
-    document.getElementById("Timer").innerHTML = '1:00';
+    setStartTimer(true)    
     setCounter(0);
-    setReload(!Reload)
+    navigate('/redirect')
   };  
-  const closeModal = () => {   
-    document.getElementById("UserInput").value = '';
-    document.getElementById("UserInput").readOnly = false;
-    document.getElementById("Timer").innerHTML = '1:00';
-    setModalShow(false) 
+  const closeModal = () => {         
+    setModalShow(false)
     clearInterval(funRef.current);
     setStartTimer(true)
     setCounter(0);    
-    setReload(!Reload)    
+    navigate('/redirect')
   };  
 
   return (
