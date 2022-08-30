@@ -25,6 +25,9 @@
         <td>I have added 7 different themes.</td>
      </tr>
      <tr>
+        <td>I have also added different keystroke sounds for fun!</td>
+     </tr>
+     <tr>
         <td>Also 4 different modes like Easy, Medium, Hard, Extreme </td>
      </tr>
      <tr>
