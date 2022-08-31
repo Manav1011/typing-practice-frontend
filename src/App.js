@@ -4,6 +4,7 @@ import {Helmet} from 'react-helmet';
 import MainBody from './components/MainBody';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Redirect from './components/Redirect';
+import Footer from './components/Footer';
 
 
 function App() {
@@ -94,6 +95,7 @@ function App() {
       <Route path='/' exact element={<MainBody Level={Level} Sound={Sound} Theme={Theme} ThemeText={ThemeText} ThemeBackground={ThemeBackground}/>}/>
       <Route path='/redirect' exact element={<Redirect Sound={Sound}/>}/>
       </Routes>
+      <Footer Theme={Theme} />
     </BrowserRouter>
   </div>
   )
