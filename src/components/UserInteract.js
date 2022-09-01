@@ -120,12 +120,13 @@ const onChangeHandler =(event) =>{
   if(CurrentValue=== ''){
     document.getElementById(Counter).classList.remove("text-danger"); 
   }  
-  let result=CurrentWord.includes(CurrentValue)
-  if (result){    
+  if (CurrentValue == content[Counter].slice(0,length)){
     document.getElementById(Counter).classList.remove("text-danger");
   }
-  else{
-    document.getElementById(Counter).classList.add("text-danger");    
+  else{    
+    if (lastChar !== ' '){      
+      document.getElementById(Counter).classList.add("text-danger");    
+    }
   }
 }
 
