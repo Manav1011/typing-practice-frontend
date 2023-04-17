@@ -1,6 +1,6 @@
 # Typing Practice App Using React and Django
 
-## The site's live and up running [Here](https://10fingers-react.netlify.app)
+## The site's live and up running [Here](https://10fingers-react.netlify.app) //Hosting subscription ended
 
 <table class="table table-light border border-success border-5">
     <thead>
