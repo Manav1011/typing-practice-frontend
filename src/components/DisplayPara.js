@@ -3,7 +3,7 @@ import {Helmet} from 'react-helmet';
 
 function DisplayPara({content,Theme,ThemeBackground}) {          
   return (
-    <div className={`mt-5`} >
+    <div className={``} >
           
       <Card className="ParaCard bg-transparent border border-0"  style={{maxHeight: '25vh' , overflow: 'scroll'}}>
         <Card.Body> 

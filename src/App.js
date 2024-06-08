@@ -85,7 +85,7 @@ function App() {
   },[Theme])  
   
   return (
-  <div className="App">
+  <div className="App" style={{height:'100%',display:'flex',flexDirection:'column',justifyContent:'space-between'}}>
     <BrowserRouter>
        <Helmet>
                 <style>{`body {${ThemeBackground}}`}</style>

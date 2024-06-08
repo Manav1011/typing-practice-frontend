@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 
 const Footer = ({Theme}) => {
   return (
-    <div className="w-100 position-fixed bottom-0">
+    <div className="w-100">
     <Card body className='bg-transparent border border-0 text-center'>    
     <div className='container'>
         <hr className={`${Theme=='Light'? 'text-dark' : 'text-light'}`}/>

@@ -57,12 +57,12 @@ function NavBar({Theme,setTheme,setLevel,Level,Sound,setSound}) {
               <NavDropdown.Item  onClick={() =>{ChangeLevel('Medium')}}>
                 Medium
               </NavDropdown.Item>
-              <NavDropdown.Item  onClick={() => {ChangeLevel('Hard')}}>
+              {/* <NavDropdown.Item  onClick={() => {ChangeLevel('Hard')}}>
                 Hard
               </NavDropdown.Item>
               <NavDropdown.Item  onClick={() => {ChangeLevel('Extreme')}}>
                 Extreme
-              </NavDropdown.Item>
+              </NavDropdown.Item> */}
             </NavDropdown>
             <NavDropdown title={Sound} id="basic-nav-dropdown">
             <NavDropdown.Item  onClick={() => {ChangeSound('Mute')}}>
